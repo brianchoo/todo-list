@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-const AddTodo = () => {
+const AddTodo = ({ onToggleCloseTodo }) => {
   const [inputTodo, setInputTodo] = useState("");
 
   const handleInputChange = (e) => {
@@ -17,7 +17,7 @@ const AddTodo = () => {
         placeholder="What needs to be done?"
       />
       <div className="flex justify-end mt-5">
-        <button type="button" className="hover:underline">
+        <button onClick={onToggleCloseTodo} className="hover:underline">
           Cancel
         </button>
         <button
