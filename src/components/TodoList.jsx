@@ -1,4 +1,21 @@
-const TodoList = ({ onComplete, incompleteTodos, completedTodos }) => {
+import { useState } from "react";
+import Dropdown from "./Dropdown";
+
+const TodoList = ({
+  todos,
+  onDelete,
+  onComplete,
+  incompleteTodos,
+  completedTodos,
+}) => {
+  const [openDropdownId, setOpenDropdownId] = useState(null);
+
+  const handleToggleDropdown = (dropdownId) => {
+    setOpenDropdownId((prevDropdownId) =>
+      prevDropdownId === dropdownId ? null : dropdownId
+    );
+  };
+
   return (
     <>
       {incompleteTodos?.length > 0 && (
@@ -17,9 +34,13 @@ const TodoList = ({ onComplete, incompleteTodos, completedTodos }) => {
                   />
                   <p className="-mt-1 ml-2">{todo.title}</p>
                 </div>
-                <button className="flex flex-shrink-0 ml-2">
-                  <img src="src/assets/icons/more.svg" alt="more" />
-                </button>
+                <Dropdown
+                  isOpen={openDropdownId === todo._id}
+                  toggleDropdown={() => handleToggleDropdown(todo._id)}
+                >
+                  <div className="text-gray-400 py-2">Edit Item</div>
+                  <div className="text-gray-400 py-2">Delete Item</div>
+                </Dropdown>
               </div>
             </li>
           ))}
@@ -46,12 +67,14 @@ const TodoList = ({ onComplete, incompleteTodos, completedTodos }) => {
                       alt="more"
                     />
                   </div>
-
                   <p className="-mt-1 ml-2">{todo.title}</p>
                 </div>
-                <button className="flex flex-shrink-0 ml-2">
-                  <img src="src/assets/icons/more.svg" alt="more" />
-                </button>
+                <Dropdown
+                  isOpen={openDropdownId === todo._id}
+                  toggleDropdown={() => handleToggleDropdown(todo._id)}
+                >
+                  <div>Delete Item</div>
+                </Dropdown>
               </div>
             </li>
           ))}

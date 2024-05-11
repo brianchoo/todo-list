@@ -1,4 +1,13 @@
+import { useState } from "react";
+import Dropdown from "./Dropdown";
+
 const TodoListHeader = ({ onToggleAddTodo }) => {
+  const [toggleDropdown, setToggleDropdown] = useState(false);
+
+  const handleToggleDropdown = () => {
+    setToggleDropdown(!toggleDropdown);
+  };
+
   return (
     <div className="flex justify-between border-b border-gray-300 pb-3">
       <div className="text-gray-500">To Do List</div>
@@ -6,9 +15,10 @@ const TodoListHeader = ({ onToggleAddTodo }) => {
         <button onClick={onToggleAddTodo}>
           <img src="src/assets/icons/add.svg" alt="add" />
         </button>
-        <button className="ml-2">
-          <img src="src/assets/icons/more.svg" alt="more" />
-        </button>
+        <Dropdown isOpen={toggleDropdown} toggleDropdown={handleToggleDropdown}>
+          <div className="text-gray-400 py-2">Delete Entire List</div>
+          <div className="text-gray-400 py-2">Mark as all complete</div>
+        </Dropdown>
       </div>
     </div>
   );
