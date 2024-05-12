@@ -102,6 +102,35 @@ const App = () => {
     }
   };
 
+  const handleUpdateTodo = async (id, todo) => {
+    try {
+      const editTodo = {
+        title: todo,
+      };
+
+      const response = await fetch(
+        `https://demo-todo.moneymatch.technology:8444/api/v1/todo/${id}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(editTodo),
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error("Failed to add todo");
+      }
+
+      // call a GET request to get updated todoList
+      const updatedTodos = await getTodosList();
+      setTodos(updatedTodos);
+    } catch (err) {
+      console.error("Error adding todo:", err.message);
+    }
+  };
+
   const incompleteTodos = todos.filter((todo) => !todo.isCompleted);
   const completedTodos = todos.filter((todo) => todo.isCompleted);
 
@@ -114,8 +143,9 @@ const App = () => {
             showTodo={showTodo}
             completedTodos={completedTodos}
             incompleteTodos={incompleteTodos}
-            onComplete={handleCompleteTodo}
-            onDelete={handleDeleteTodo}
+            onCompleteTodo={handleCompleteTodo}
+            onDeleteTodo={handleDeleteTodo}
+            onUpdateTodo={handleUpdateTodo}
           />
           {showTodo && (
             <AddTodo
