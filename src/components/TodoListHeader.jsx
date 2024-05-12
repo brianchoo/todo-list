@@ -5,9 +5,9 @@ const TodoListHeader = ({
   onToggleAddTodo,
   onMarkAllComplete,
   onDeleteAllTodos,
+  toggleDropdown,
+  setToggleDropdown,
 }) => {
-  const [toggleDropdown, setToggleDropdown] = useState(false);
-
   const handleToggleDropdown = () => {
     setToggleDropdown(!toggleDropdown);
   };
