@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import TodoListHeader from "./components/TodoListHeader";
 import AddTodo from "./components/AddTodo";
 import TodoList from "./components/TodoList";
@@ -6,6 +6,19 @@ import TodoList from "./components/TodoList";
 const App = () => {
   const [todos, setTodos] = useState([]);
   const [showTodo, setShowTodo] = useState(false);
+
+  useEffect(() => {
+    const getTodos = async () => {
+      const fetchTodos = await fetch(
+        "https://demo-todo.moneymatch.technology:8444/api/v1/todo/"
+      );
+      const response = await fetchTodos.json();
+
+      setTodos(response.todos);
+    };
+
+    getTodos();
+  }, []);
 
   const handleToggleTodo = (bool) => {
     setShowTodo(bool);
