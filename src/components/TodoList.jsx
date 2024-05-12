@@ -2,11 +2,11 @@ import { useState } from "react";
 import Dropdown from "./Dropdown";
 
 const TodoList = ({
-  todos,
   onDelete,
   onComplete,
   incompleteTodos,
   completedTodos,
+  showTodo,
 }) => {
   const [openDropdownId, setOpenDropdownId] = useState(null);
 
@@ -49,7 +49,7 @@ const TodoList = ({
                     <div className="flex flex-shrink-0 mr-2">
                       <img src="src/assets/icons/delete.svg" alt="add" />
                     </div>
-                    <div>Delete Item</div>
+                    <div onClick={() => onDelete(todo._id)}>Delete Item</div>
                   </div>
                 </Dropdown>
               </div>
@@ -60,7 +60,7 @@ const TodoList = ({
 
       {completedTodos.length > 0 && <hr className="mx-4" />}
 
-      {completedTodos?.length > 0 && (
+      {completedTodos?.length > 0 && !showTodo && (
         <ul className="px-4">
           {completedTodos.map((todo) => (
             <li key={todo._id} className="flex my-7 line-through">
@@ -95,7 +95,7 @@ const TodoList = ({
                     <div className="flex flex-shrink-0 mr-2">
                       <img src="src/assets/icons/delete.svg" alt="add" />
                     </div>
-                    <div>Delete Item</div>
+                    <div onClick={() => onDelete(todo._id)}>Delete Item</div>
                   </div>
                 </Dropdown>
               </div>

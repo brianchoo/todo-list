@@ -57,8 +57,6 @@ const App = () => {
         title: todo,
       };
 
-      console.log(newTodo);
-
       const response = await fetch(
         "https://demo-todo.moneymatch.technology:8444/api/v1/todo/",
         {
@@ -82,6 +80,28 @@ const App = () => {
     }
   };
 
+  const handleDeleteTodo = async (id) => {
+    try {
+      const response = await fetch(
+        `https://demo-todo.moneymatch.technology:8444/api/v1/todo/${id}`,
+        {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      if (!response.ok) {
+        throw new Error("Failed to complete todo");
+      }
+
+      const updatedTodos = await getTodosList();
+      setTodos(updatedTodos);
+    } catch (err) {
+      console.error("Error completing todo:", err.message);
+    }
+  };
+
   const incompleteTodos = todos.filter((todo) => !todo.isCompleted);
   const completedTodos = todos.filter((todo) => todo.isCompleted);
 
@@ -91,9 +111,11 @@ const App = () => {
         <div className="w-10/12 md:w-1/4 h-auto p-4 rounded-md bg-lime-100">
           <TodoListHeader onToggleAddTodo={() => handleToggleTodo(true)} />
           <TodoList
+            showTodo={showTodo}
             completedTodos={completedTodos}
             incompleteTodos={incompleteTodos}
             onComplete={handleCompleteTodo}
+            onDelete={handleDeleteTodo}
           />
           {showTodo && (
             <AddTodo
