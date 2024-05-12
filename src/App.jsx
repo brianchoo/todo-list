@@ -28,6 +28,33 @@ const App = () => {
     setShowTodo(bool);
   };
 
+  const handleCompleteAllTodos = async () => {
+    try {
+      const completeAllTodosPromise = todos.map(async (todo) => {
+        const response = await fetch(
+          `https://demo-todo.moneymatch.technology:8444/api/v1/todo/${todo._id}`,
+          {
+            method: "PATCH",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ isCompleted: true }),
+          }
+        );
+        if (!response.ok) {
+          throw new Error("Failed to complete all todos:", todo._id);
+        }
+      });
+
+      await Promise.all(completeAllTodosPromise);
+
+      const updatedTodos = await getTodosList();
+      setTodos(updatedTodos);
+    } catch (err) {
+      console.error("Error completing all todos:", err.message);
+    }
+  };
+
   const handleCompleteTodo = async (id) => {
     try {
       const response = await fetch(
@@ -138,7 +165,10 @@ const App = () => {
     <>
       <main className="h-screen w-full flex justify-center items-center ">
         <div className="w-10/12 md:w-1/4 h-auto p-4 rounded-md bg-lime-100">
-          <TodoListHeader onToggleAddTodo={() => handleToggleTodo(true)} />
+          <TodoListHeader
+            onToggleAddTodo={() => handleToggleTodo(true)}
+            onMarkAllComplete={handleCompleteAllTodos}
+          />
           <TodoList
             showTodo={showTodo}
             completedTodos={completedTodos}
