@@ -35,11 +35,22 @@ const TodoList = ({
                   <p className="-mt-1 ml-2">{todo.title}</p>
                 </div>
                 <Dropdown
+                  width={"w-40"}
                   isOpen={openDropdownId === todo._id}
                   toggleDropdown={() => handleToggleDropdown(todo._id)}
                 >
-                  <div className="text-gray-400 py-2">Edit Item</div>
-                  <div className="text-gray-400 py-2">Delete Item</div>
+                  <div className="text-gray-400 py-2 flex items-center">
+                    <div className="flex flex-shrink-0 mr-2">
+                      <img src="src/assets/icons/edit-confirm.svg" alt="add" />
+                    </div>
+                    <div>Edit Item</div>
+                  </div>
+                  <div className="text-gray-400 py-2 flex items-center">
+                    <div className="flex flex-shrink-0 mr-2">
+                      <img src="src/assets/icons/delete.svg" alt="add" />
+                    </div>
+                    <div>Delete Item</div>
+                  </div>
                 </Dropdown>
               </div>
             </li>

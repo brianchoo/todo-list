@@ -28,12 +28,27 @@ const App = () => {
     setShowTodo(bool);
   };
 
-  const handleCompleteTodo = (id) => {
-    setTodos((prevState) =>
-      prevState.map((todo) =>
-        todo._id === id ? { ...todo, isCompleted: true } : todo
-      )
-    );
+  const handleCompleteTodo = async (id) => {
+    try {
+      const response = await fetch(
+        `https://demo-todo.moneymatch.technology:8444/api/v1/todo/${id}`,
+        {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ isCompleted: true }),
+        }
+      );
+      if (!response.ok) {
+        throw new Error("Failed to complete todo");
+      }
+
+      const updatedTodos = await getTodosList();
+      setTodos(updatedTodos);
+    } catch (err) {
+      console.error("Error completing todo:", err.message);
+    }
   };
 
   const handleAddTodo = async (todo) => {
