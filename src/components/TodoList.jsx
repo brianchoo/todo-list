@@ -39,13 +39,17 @@ const TodoList = ({
                   isOpen={openDropdownId === todo._id}
                   toggleDropdown={() => handleToggleDropdown(todo._id)}
                 >
-                  <div className="text-gray-400 py-2 flex items-center">
+                  <div className="text-gray-400 py-2 flex items-center cursor-pointer hover:bg-gray-100 rounded-lg px-2">
                     <div className="flex flex-shrink-0 mr-2">
-                      <img src="src/assets/icons/edit-confirm.svg" alt="add" />
+                      <img
+                        className="w-6"
+                        src="src/assets/icons/edit.svg"
+                        alt="add"
+                      />
                     </div>
                     <div>Edit Item</div>
                   </div>
-                  <div className="text-gray-400 py-2 flex items-center">
+                  <div className="text-gray-400 py-2 flex items-center cursor-pointer hover:bg-gray-100 rounded-lg px-2">
                     <div className="flex flex-shrink-0 mr-2">
                       <img src="src/assets/icons/delete.svg" alt="add" />
                     </div>
@@ -91,7 +95,7 @@ const TodoList = ({
                   isOpen={openDropdownId === todo._id}
                   toggleDropdown={() => handleToggleDropdown(todo._id)}
                 >
-                  <div className="text-gray-400 py-2 flex items-center">
+                  <div className="text-gray-400 py-2 flex items-center cursor-pointer hover:bg-gray-100 rounded-lg px-2">
                     <div className="flex flex-shrink-0 mr-2">
                       <img src="src/assets/icons/delete.svg" alt="add" />
                     </div>

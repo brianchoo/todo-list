@@ -16,8 +16,12 @@ const TodoListHeader = ({ onToggleAddTodo }) => {
           <img src="src/assets/icons/add.svg" alt="add" />
         </button>
         <Dropdown isOpen={toggleDropdown} toggleDropdown={handleToggleDropdown}>
-          <div className="text-gray-400 py-2">Delete Entire List</div>
-          <div className="text-gray-400 py-2">Mark as all complete</div>
+          <div className="text-gray-400 p-2 cursor-pointer hover:bg-gray-100 rounded-lg">
+            Delete Entire List
+          </div>
+          <div className="text-gray-400 p-2 cursor-pointer hover:bg-gray-100 rounded-lg">
+            Mark as all complete
+          </div>
         </Dropdown>
       </div>
     </div>
