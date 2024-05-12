@@ -107,6 +107,32 @@ const App = () => {
     }
   };
 
+  const handleDeleteAllTodos = async () => {
+    try {
+      const deleteAllTodosPromise = todos.map(async (todo) => {
+        const response = await fetch(
+          `https://demo-todo.moneymatch.technology:8444/api/v1/todo/${todo._id}`,
+          {
+            method: "DELETE",
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
+        );
+        if (!response.ok) {
+          throw new Error("Failed to delete all todos:", todo._id);
+        }
+      });
+
+      await Promise.all(deleteAllTodosPromise);
+
+      const updatedTodos = await getTodosList();
+      setTodos(updatedTodos);
+    } catch (err) {
+      console.error("Error deleting all todos:", err.message);
+    }
+  };
+
   const handleDeleteTodo = async (id) => {
     try {
       const response = await fetch(
@@ -168,6 +194,7 @@ const App = () => {
           <TodoListHeader
             onToggleAddTodo={() => handleToggleTodo(true)}
             onMarkAllComplete={handleCompleteAllTodos}
+            onDeleteAllTodos={handleDeleteAllTodos}
           />
           <TodoList
             showTodo={showTodo}

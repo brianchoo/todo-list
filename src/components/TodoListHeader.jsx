@@ -1,7 +1,11 @@
 import { useState } from "react";
 import Dropdown from "./Dropdown";
 
-const TodoListHeader = ({ onToggleAddTodo, onMarkAllComplete }) => {
+const TodoListHeader = ({
+  onToggleAddTodo,
+  onMarkAllComplete,
+  onDeleteAllTodos,
+}) => {
   const [toggleDropdown, setToggleDropdown] = useState(false);
 
   const handleToggleDropdown = () => {
@@ -16,7 +20,10 @@ const TodoListHeader = ({ onToggleAddTodo, onMarkAllComplete }) => {
           <img src="src/assets/icons/add.svg" alt="add" />
         </button>
         <Dropdown isOpen={toggleDropdown} toggleDropdown={handleToggleDropdown}>
-          <div className="text-gray-400 p-2 cursor-pointer hover:bg-gray-100 rounded-lg">
+          <div
+            className="text-gray-400 p-2 cursor-pointer hover:bg-gray-100 rounded-lg"
+            onClick={onDeleteAllTodos}
+          >
             Delete Entire List
           </div>
           <div
