@@ -3,21 +3,25 @@ import TodoListHeader from "./components/TodoListHeader";
 import AddTodo from "./components/AddTodo";
 import TodoList from "./components/TodoList";
 
+const getTodosList = async () => {
+  const fetchTodos = await fetch(
+    "https://demo-todo.moneymatch.technology:8444/api/v1/todo/"
+  );
+  const response = await fetchTodos.json();
+  return response.todos;
+};
+
 const App = () => {
   const [todos, setTodos] = useState([]);
   const [showTodo, setShowTodo] = useState(false);
 
   useEffect(() => {
-    const getTodos = async () => {
-      const fetchTodos = await fetch(
-        "https://demo-todo.moneymatch.technology:8444/api/v1/todo/"
-      );
-      const response = await fetchTodos.json();
-
-      setTodos(response.todos);
+    const fetchData = async () => {
+      const todosData = await getTodosList();
+      setTodos(todosData);
     };
 
-    getTodos();
+    fetchData();
   }, []);
 
   const handleToggleTodo = (bool) => {
@@ -30,6 +34,37 @@ const App = () => {
         todo._id === id ? { ...todo, isCompleted: true } : todo
       )
     );
+  };
+
+  const handleAddTodo = async (todo) => {
+    try {
+      const newTodo = {
+        title: todo,
+      };
+
+      console.log(newTodo);
+
+      const response = await fetch(
+        "https://demo-todo.moneymatch.technology:8444/api/v1/todo/",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(newTodo),
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error("Failed to add todo");
+      }
+
+      // call a GET request to get updated todoList
+      const updatedTodos = await getTodosList();
+      setTodos(updatedTodos);
+    } catch (err) {
+      console.error("Error adding todo:", err.message);
+    }
   };
 
   const incompleteTodos = todos.filter((todo) => !todo.isCompleted);
@@ -46,7 +81,10 @@ const App = () => {
             onComplete={handleCompleteTodo}
           />
           {showTodo && (
-            <AddTodo onToggleCloseTodo={() => handleToggleTodo(false)} />
+            <AddTodo
+              onToggleCloseTodo={() => handleToggleTodo(false)}
+              onAddTodo={handleAddTodo}
+            />
           )}
         </div>
       </main>

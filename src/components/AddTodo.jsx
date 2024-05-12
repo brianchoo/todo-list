@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-const AddTodo = ({ onToggleCloseTodo }) => {
+const AddTodo = ({ onToggleCloseTodo, onAddTodo }) => {
   const [inputTodo, setInputTodo] = useState("");
 
   const handleInputChange = (e) => {
@@ -23,6 +23,7 @@ const AddTodo = ({ onToggleCloseTodo }) => {
         <button
           className="bg-green-400 hover:text-white text-green-700 font-semibold py-1.5 px-4 rounded-md disabled:bg-gray-200 disabled:text-gray-300 disabled:border-slate-200 disabled:shadow-none ml-4"
           disabled={!inputTodo.trim()}
+          onClick={() => onAddTodo(inputTodo)}
         >
           Create
         </button>
