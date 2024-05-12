@@ -78,13 +78,25 @@ const TodoList = ({
                       alt="more"
                     />
                   </div>
-                  <p className="-mt-1 ml-2">{todo.title}</p>
+                  <p
+                    className={`${
+                      todo.isCompleted && "text-gray-400"
+                    } -mt-1 ml-2`}
+                  >
+                    {todo.title}
+                  </p>
                 </div>
                 <Dropdown
+                  width={"w-40"}
                   isOpen={openDropdownId === todo._id}
                   toggleDropdown={() => handleToggleDropdown(todo._id)}
                 >
-                  <div>Delete Item</div>
+                  <div className="text-gray-400 py-2 flex items-center">
+                    <div className="flex flex-shrink-0 mr-2">
+                      <img src="src/assets/icons/delete.svg" alt="add" />
+                    </div>
+                    <div>Delete Item</div>
+                  </div>
                 </Dropdown>
               </div>
             </li>
