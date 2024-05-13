@@ -1,6 +1,6 @@
 const Dropdown = ({ children, isOpen, toggleDropdown, width }) => {
   return (
-    <div className="relative">
+    <div data-testid="dropdown" className="relative">
       <button className="flex flex-shrink-0 ml-2" onClick={toggleDropdown}>
         <img src="src/assets/icons/more.svg" alt="more" />
       </button>

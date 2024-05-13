@@ -1,9 +1,15 @@
-import { describe, it, expect } from "vitest";
-import { render, screen } from "@testing-library/react";
-import App from "./App";
+import { describe, it, expect, vi } from "vitest";
+import { render, fireEvent } from "@testing-library/react";
+import Dropdown from "./components/Dropdown";
 
-describe("App", () => {
-  it("renders the App component", () => {
-    render(<App />);
+describe("Dropdown click", () => {
+  it("should open a dropdown", () => {
+    const handleClick = vi.fn();
+    const { getByTestId } = render(<Dropdown toggleDropdown={handleClick} />);
+    const dropdown = getByTestId("dropdown");
+
+    fireEvent.click(getByTestId("dropdown"));
+
+    expect(dropdown).toBeInTheDocument();
   });
 });
